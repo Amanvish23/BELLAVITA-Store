@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Profile - Bellavita</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+<section class="profile-box">
+
+
+<h1>My Profile</h1>
+
+
+<div id="profile-data"></div>
+
+
+</section>
+
+
+
+<script>
+
+
+let user =
+JSON.parse(localStorage.getItem("user"));
+
+
+if(user){
+
+
+document.getElementById("profile-data").innerHTML = `
+
+
+<h2>${user.name}</h2>
+
+<p>Email:
+${user.email}
+</p>
+
+
+<button onclick="logout()">
+Logout
+</button>
+
+
+`;
+
+
+}
+
+
+
+function logout(){
+
+localStorage.removeItem("login");
+
+window.location.href="login.html";
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
