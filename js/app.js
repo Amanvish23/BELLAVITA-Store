@@ -1,20 +1,66 @@
-const userArea = document.getElementById("user-area");  //HTML me jis element ki id user-area hai usko JavaScript me la raha hai.
+// =========================================
+// BELLAVITA STORE - APP
+// =========================================
 
-function checkLogin(){  //ye function checkLogin() user ke login status ko check karta hai.
 
-    if(!userArea) return;
+// =========================================
+// USER / LOGIN AREA
+// =========================================
 
-    const currentUser = JSON.parse(
+function getCurrentUser() {
+
+    return JSON.parse(
         localStorage.getItem("currentUser")
-    ); //localStorage se currentUser ko get kar raha hai aur JSON.parse() se usko JavaScript object me convert kar raha hai.
+    );
 
-    if(currentUser){  //agar currentUser exist karta hai to userArea me profile dropdown show karega.
+}
 
-        userArea.innerHTML = ` 
+
+// =========================================
+// NAVBAR USER AREA
+// =========================================
+
+function updateUserArea() {
+
+    const userArea =
+        document.getElementById("user-area");
+
+    if (!userArea) {
+        return;
+    }
+
+
+    const currentUser =
+        getCurrentUser();
+
+
+    // Not logged in
+
+    if (!currentUser) {
+
+        userArea.innerHTML = `
+
+            <a href="login.html">
+                Login
+            </a>
+
+        `;
+
+        return;
+    }
+
+
+    // Logged in
+
+    userArea.innerHTML = `
 
         <div class="profile-dropdown">
 
-            <button class="profile-btn" onclick="toggleProfile(event)">
+            <button
+                class="profile-btn"
+                id="profileBtn"
+                type="button"
+            >
 
                 <i class="fa-solid fa-user"></i>
 
@@ -24,78 +70,259 @@ function checkLogin(){  //ye function checkLogin() user ke login status ko check
 
             </button>
 
-            <div class="dropdown-menu" id="dropdown-menu">
+
+            <div
+                class="dropdown-menu"
+                id="profileMenu"
+            >
 
                 <a href="profile.html">
                     View Profile
                 </a>
 
-                <a href="#" onclick="logout(event)">
+                <a
+                    href="#"
+                    onclick="logout(event)"
+                >
                     Logout
-                 </a>
+                </a>
 
             </div>
 
         </div>
 
-        `;
+    `;
 
-    }
 
-    else{
+    const profileBtn =
+        document.getElementById("profileBtn");
 
-        userArea.innerHTML = `
-        <a href="login.html">Login</a>
-        `;
+    const profileMenu =
+        document.getElementById("profileMenu");
+
+
+    if (profileBtn && profileMenu) {
+
+        profileBtn.addEventListener(
+            "click",
+            function (event) {
+
+                event.stopPropagation();
+
+                profileMenu.classList.toggle("show");
+
+            }
+        );
 
     }
 
 }
 
-function toggleProfile(event){  //ye function toggleProfile(event) profile dropdown ko show/hide karta hai.
 
-    event.stopPropagation();
+// =========================================
+// LOGOUT
+// =========================================
 
-    document
-    .getElementById("dropdown-menu")
-    .classList.toggle("show");
+function logout(event) {
 
-}  //
-
-document.addEventListener("click",()=>{
-
-    let menu=document.getElementById("dropdown-menu");
-
-    if(menu){
-
-        menu.classList.remove("show");
-
+    if (event) {
+        event.preventDefault();
     }
 
-});
-
-function logout(e){
-
-    e.preventDefault();
 
     localStorage.removeItem("currentUser");
 
     localStorage.removeItem("login");
 
-    window.location.href = "index.html";
+
+    window.location.href =
+        "index.html";
 
 }
-checkLogin();
 
-const menuBtn = document.getElementById("menuBtn");
-const navLinks = document.getElementById("navLinks");
 
-if(menuBtn){
+// =========================================
+// CLOSE PROFILE DROPDOWN
+// =========================================
 
-    menuBtn.addEventListener("click",()=>{
+document.addEventListener(
+    "click",
+    function () {
 
-        navLinks.classList.toggle("active");
+        const profileMenu =
+            document.getElementById("profileMenu");
+
+        if (profileMenu) {
+
+            profileMenu.classList.remove("show");
+
+        }
+
+    }
+);
+
+
+// =========================================
+// FEATURED PRODUCTS
+// =========================================
+
+function showFeaturedProducts() {
+
+    const productGrid =
+        document.getElementById("product-grid");
+
+
+    // Stop if product grid doesn't exist
+
+    if (!productGrid) {
+        return;
+    }
+
+
+    // Clear existing products
+
+    productGrid.innerHTML = "";
+
+
+    // Show ALL products
+
+    products.forEach(function (product) {
+
+        productGrid.innerHTML += `
+
+            <div class="product-card">
+
+                <img
+                    src="${product.image}"
+                    alt="${product.name}"
+                >
+
+
+                <div class="product-info">
+
+                    <h3>
+                        ${product.name}
+                    </h3>
+
+
+                    <p>
+                        ${product.category}
+                    </p>
+
+
+                    <div class="price">
+                        ₹${product.price.toLocaleString("en-IN")}
+                    </div>
+
+
+                    <p>
+                        ⭐ ${product.rating}
+                    </p>
+
+
+                    <button
+                        type="button"
+                        onclick="addToCart(${product.id})"
+                    >
+                        Add To Cart
+                    </button>
+
+                </div>
+
+            </div>
+
+        `;
 
     });
 
 }
+
+
+// =========================================
+// CART COUNT
+// =========================================
+
+function updateHomeCartCount() {
+
+    const count =
+        document.getElementById("cart-count");
+
+
+    if (!count) {
+        return;
+    }
+
+
+    const currentUser =
+        getCurrentUser();
+
+
+    if (!currentUser) {
+
+        count.textContent = "0";
+
+        return;
+    }
+
+
+    const cartKey =
+        `cart_${currentUser.email}`;
+
+
+    const cart =
+        JSON.parse(
+            localStorage.getItem(cartKey)
+        ) || [];
+
+
+    let totalQuantity = 0;
+
+
+    cart.forEach(function (item) {
+
+        totalQuantity +=
+            Number(item.quantity || 1);
+
+    });
+
+
+    count.textContent =
+        totalQuantity;
+
+}
+
+
+// =========================================
+// MOBILE MENU
+// =========================================
+
+const menuBtn =
+    document.getElementById("menuBtn");
+
+const navLinks =
+    document.getElementById("navLinks");
+
+
+if (menuBtn && navLinks) {
+
+    menuBtn.addEventListener(
+        "click",
+        function () {
+
+            navLinks.classList.toggle("active");
+
+        }
+    );
+
+}
+
+
+// =========================================
+// INITIAL LOAD
+// =========================================
+
+updateUserArea();
+
+showFeaturedProducts();
+
+updateHomeCartCount();

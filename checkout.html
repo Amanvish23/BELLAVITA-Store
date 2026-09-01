@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Bellavita Checkout</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/checkout.css">
+
+</head>
+
+<body>
+
+
+<section class="checkout-section">
+
+    <div class="checkout-header">
+
+        <p class="checkout-brand">
+            BELLAVITA
+        </p>
+
+        <h1>
+            Checkout
+        </h1>
+
+        <p>
+            Complete your order securely
+        </p>
+
+    </div>
+
+
+    <div class="checkout-wrapper">
+
+
+        <!-- =========================================
+             LEFT SIDE
+        ========================================== -->
+
+        <div class="checkout-left">
+
+
+            <!-- DELIVERY DETAILS -->
+
+            <div class="checkout-card">
+
+                <div class="card-title">
+
+                    <span>01</span>
+
+                    <div>
+
+                        <h2>
+                            Delivery Details
+                        </h2>
+
+                        <p>
+                            Where should we deliver your order?
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <form id="checkout-form">
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Full Name
+                            </label>
+
+                            <input
+                                type="text"
+                                id="fullName"
+                                placeholder="Enter your full name"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Mobile Number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="mobile"
+                                placeholder="10-digit mobile number"
+                                maxlength="10"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Email Address
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <textarea
+                            id="address"
+                            placeholder="House no., street, area"
+                            rows="3"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                placeholder="City"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                State
+                            </label>
+
+                            <input
+                                type="text"
+                                id="state"
+                                placeholder="State"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                Pincode
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                placeholder="Pincode"
+                                maxlength="6"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 PAYMENT
+            ========================================== -->
+
+            <div class="checkout-card">
+
+                <div class="card-title">
+
+                    <span>02</span>
+
+                    <div>
+
+                        <h2>
+                            Payment Method
+                        </h2>
+
+                        <p>
+                            Choose your preferred payment option
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="payment-options">
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="upi"
+                            checked
+                        >
+
+                        <div>
+
+                            <strong>
+                                UPI
+                            </strong>
+
+                            <small>
+                                Google Pay, PhonePe, Paytm
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="card"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Credit / Debit Card
+                            </strong>
+
+                            <small>
+                                Visa, Mastercard, RuPay
+                            </small>
+
+                        </div>
+
+                    </label>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="cod"
+                        >
+
+                        <div>
+
+                            <strong>
+                                Cash on Delivery
+                            </strong>
+
+                            <small>
+                                Pay when your order arrives
+                            </small>
+
+                        </div>
+
+                    </label>
+
+                </div>
+
+
+                <!-- UPI -->
+
+                <div
+                    id="upi-box"
+                    class="payment-box"
+                >
+
+                    <label>
+                        UPI ID
+                    </label>
+
+                    <input
+                        type="text"
+                        id="upi"
+                        placeholder="example@upi"
+                    >
+
+                </div>
+
+
+                <!-- CARD -->
+
+                <div
+                    id="card-box"
+                    class="payment-box hidden"
+                >
+
+                    <div class="form-group">
+
+                        <label>
+                            Card Holder Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="card-name"
+                            placeholder="Name on card"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Card Number
+                        </label>
+
+                        <input
+                            type="text"
+                            id="card-number"
+                            placeholder="XXXX XXXX XXXX XXXX"
+                            maxlength="19"
+                        >
+
+                    </div>
+
+
+                    <div class="form-row">
+
+                        <div class="form-group">
+
+                            <label>
+                                Expiry
+                            </label>
+
+                            <input
+                                type="text"
+                                id="expiry"
+                                placeholder="MM/YY"
+                                maxlength="5"
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label>
+                                CVV
+                            </label>
+
+                            <input
+                                type="password"
+                                id="cvv"
+                                placeholder="CVV"
+                                maxlength="3"
+                            >
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+
+            <!-- =========================================
+                 SECURITY
+            ========================================== -->
+
+            <div class="checkout-security">
+
+                <span>
+                    🔒
+                </span>
+
+                <div>
+
+                    <strong>
+                        Secure Demo Checkout
+                    </strong>
+
+                    <p>
+                        This is a demo payment system.
+                        No real payment will be processed.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =========================================
+             RIGHT SIDE
+        ========================================== -->
+
+        <div class="checkout-right">
+
+            <div class="order-card">
+
+                <h2>
+                    Your Order
+                </h2>
+
+
+                <div id="checkout-items"></div>
+
+
+                <!-- COUPON -->
+
+                <div class="coupon-box">
+
+                    <input
+                        type="text"
+                        id="coupon"
+                        placeholder="Coupon code"
+                    >
+
+                    <button
+                        type="button"
+                        id="apply-coupon"
+                    >
+                        Apply
+                    </button>
+
+                </div>
+
+
+                <p id="coupon-message"></p>
+
+
+                <!-- PRICE -->
+
+                <div class="price-details">
+
+                    <div>
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span id="subtotal">
+                            ₹0
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Discount
+                        </span>
+
+                        <span id="discount">
+                            -₹0
+                        </span>
+
+                    </div>
+
+
+                    <div>
+
+                        <span>
+                            Delivery
+                        </span>
+
+                        <span id="shipping">
+                            FREE
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="grand-total">
+
+                        <strong>
+                            Total
+                        </strong>
+
+                        <strong id="grand-total">
+                            ₹0
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <!-- PLACE ORDER -->
+
+                <button
+                    type="button"
+                    id="place-order"
+                    class="place-order-btn"
+                >
+                    PLACE ORDER
+                </button>
+
+
+                <a
+                    href="cart.html"
+                    class="back-cart"
+                >
+                    ← Back to Cart
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     SUCCESS POPUP
+========================================= -->
+
+<div
+    id="success-modal"
+    class="success-modal hidden"
+>
+
+    <div class="success-box">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+
+        <h2>
+            Order Placed Successfully!
+        </h2>
+
+
+        <p>
+            Thank you for shopping with BELLAVITA.
+        </p>
+
+
+        <div class="order-id">
+
+            Order ID:
+
+            <strong id="order-id">
+                BV000000
+            </strong>
+
+        </div>
+
+
+        <p class="delivery-message">
+            Your order will be delivered within
+            3-5 business days.
+        </p>
+
+
+        <a
+            href="index.html"
+            class="success-btn"
+        >
+            CONTINUE SHOPPING
+        </a>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     CHECKOUT LOGIN PROTECTION
+========================================= -->
+
+<script>
+
+const currentUser =
+    JSON.parse(
+        localStorage.getItem("currentUser")
+    );
+
+
+if (!currentUser) {
+
+    alert(
+        "Please login first to continue checkout."
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+</script>
+
+
+
+<script src="js/checkout.js"></script>
+
+
+</body>
+
+</html>

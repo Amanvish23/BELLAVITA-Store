@@ -3,39 +3,67 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
 
-<title>Bellavita Cart</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="css/style.css">
+    <title>Bellavita Cart</title>
+
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
-    <section class="cart-section">
+
+
+<section class="cart-section">
 
     <h1>Your Shopping Cart</h1>
 
+
     <div class="cart-wrapper">
 
+
+        <!-- CART PRODUCTS -->
+
         <div id="cart-container"></div>
+
+
+        <!-- ORDER SUMMARY -->
 
         <div class="cart-summary">
 
             <h2>Order Summary</h2>
 
-            <p>Shipping : <span>FREE</span></p>
+
+            <p>
+                Shipping :
+                <span>FREE</span>
+            </p>
+
 
             <hr>
 
-            <h3 id="total-price">Total : ₹0</h3>
 
-            <a href="checkout.html" class="btn">
+            <h3 id="total-price">
+                Total : ₹0
+            </h3>
+
+
+            <a
+                href="checkout.html"
+                class="btn"
+                id="checkout-btn"
+            >
                 Proceed To Checkout
             </a>
 
-            <a href="index.html" class="continue-btn">
+
+            <a
+                href="index.html"
+                class="continue-btn"
+            >
                 Continue Shopping
             </a>
 
@@ -45,7 +73,34 @@
 
 </section>
 
+
+
+<!-- LOGIN PROTECTION -->
+
+<script>
+
+const currentUser =
+    JSON.parse(
+        localStorage.getItem("currentUser")
+    );
+
+
+if (!currentUser) {
+
+    alert(
+        "Please login first to access your cart."
+    );
+
+    window.location.href =
+        "login.html";
+
+}
+
+</script>
+
+
 <script src="js/cart.js"></script>
+
 
 </body>
 

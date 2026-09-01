@@ -1,106 +1,174 @@
-const shopProducts = document.getElementById("shop-products");
 
-const search = document.getElementById("search");
+// BELLAVITA SHOP
 
-const category = document.getElementById("category");
+const shopProductGrid =
+    document.getElementById("product-grid");
 
+const searchInput =
+    document.getElementById("search");
 
+const categorySelect =
+    document.getElementById("category");
 
-function showProducts(list){
-
-
-shopProducts.innerHTML="";
-
-
-list.forEach(product=>{
-
-
-shopProducts.innerHTML += `
+const noProducts =
+    document.getElementById("no-products");
 
 
-<div class="product-card">
+// =========================================
+// CHECK SHOP PAGE
+// =========================================
+
+if (
+    shopProductGrid &&
+    searchInput &&
+    categorySelect
+) {
+
+    // =====================================
+    // DISPLAY SHOP PRODUCTS
+    // =====================================
+
+    function displayShopProducts(list) {
+
+        shopProductGrid.innerHTML = "";
 
 
-<img src="${product.image}">
+        // No products
+
+        if (list.length === 0) {
+
+            if (noProducts) {
+                noProducts.style.display = "block";
+            }
+
+            return;
+
+        }
 
 
-<div class="product-info">
+        if (noProducts) {
+            noProducts.style.display = "none";
+        }
 
 
-<h3>${product.name}</h3>
+        // Products
+
+        list.forEach(product => {
+
+            shopProductGrid.innerHTML += `
+
+                <div class="product-card">
+
+                    <img
+                        src="${product.image}"
+                        alt="${product.name}"
+                    >
+
+                    <div class="product-info">
+
+                        <h3>
+                            ${product.name}
+                        </h3>
+
+                        <p>
+                            ${product.category}
+                        </p>
+
+                        <div class="price">
+                            ₹${product.price.toLocaleString("en-IN")}
+                        </div>
+
+                        <p>
+                            ⭐ ${product.rating}
+                        </p>
+
+                        <button
+                            type="button"
+                            onclick="addToCart(${product.id})"
+                        >
+                            Add To Cart
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+        });
+
+    }
 
 
-<p>${product.category}</p>
+    // =====================================
+    // FILTER
+    // =====================================
+
+    function filterProducts() {
+
+        const searchText =
+            searchInput.value
+            .trim()
+            .toLowerCase();
 
 
-<div class="price">
-₹${product.price}
-</div>
+        const selectedCategory =
+            categorySelect.value;
 
 
-<button onclick="addToCart(${product.id})">
+        const filteredProducts =
+            products.filter(product => {
 
-Add To Cart
-
-</button>
-
-
-</div>
-
-
-</div>
+                const matchesSearch =
+                    product.name
+                    .toLowerCase()
+                    .includes(searchText);
 
 
-`;
+                const matchesCategory =
+                    selectedCategory === "all" ||
+                    product.category === selectedCategory;
 
 
-});
+                return (
+                    matchesSearch &&
+                    matchesCategory
+                );
 
+            });
+
+
+        displayShopProducts(
+            filteredProducts
+        );
+
+    }
+
+
+    // =====================================
+    // SEARCH
+    // =====================================
+
+    searchInput.addEventListener(
+        "input",
+        filterProducts
+    );
+
+
+    // =====================================
+    // CATEGORY
+    // =====================================
+
+    categorySelect.addEventListener(
+        "change",
+        filterProducts
+    );
+
+
+    // =====================================
+    // INITIAL
+    // =====================================
+
+    displayShopProducts(products);
 
 }
-
-
-
-showProducts(products);
-
-
-
-function filterProducts(){
-
-
-let result = products.filter(product=>{
-
-
-let matchName =
-product.name.toLowerCase()
-.includes(search.value.toLowerCase());
-
-
-let matchCategory =
-category.value=="all" ||
-product.category==category.value;
-
-
-return matchName && matchCategory;
-
-
-});
-
-
-showProducts(result);
-
-
-}
-
-
-
-search.addEventListener(
-"input",
-filterProducts
-);
-
-
-category.addEventListener(
-"change",
-filterProducts
-);

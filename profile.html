@@ -1,74 +1,421 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
 
-<title>Profile - Bellavita</title>
+    <meta charset="UTF-8">
 
-<link rel="stylesheet" href="css/style.css">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Profile - Bellavita</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="css/profile.css">
 
 </head>
 
-
 <body>
-
 
 <section class="profile-box">
 
+    <div class="profile-avatar">
+        👤
+    </div>
 
-<h1>My Profile</h1>
+    <h1>My Profile</h1>
+
+    <p class="profile-subtitle">
+        Manage your Bellavita account
+    </p>
 
 
-<div id="profile-data"></div>
+    <!-- PROFILE VIEW -->
+
+    <div id="profile-view">
+
+        <div class="profile-info">
+
+            <div class="profile-row">
+
+                <span>Full Name</span>
+
+                <strong id="display-name">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <span>Email Address</span>
+
+                <strong id="display-email">
+                    -
+                </strong>
+
+            </div>
+
+
+            <div class="profile-row">
+
+                <span>Mobile Number</span>
+
+                <strong id="display-mobile">
+                    Not added
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <button
+            type="button"
+            id="edit-profile-btn"
+            class="profile-btn"
+        >
+            EDIT PROFILE
+        </button>
+
+    </div>
+
+
+
+    <!-- EDIT PROFILE -->
+
+    <div id="profile-edit" class="hidden">
+
+        <form id="profile-form">
+
+            <div class="form-group">
+
+                <label>Full Name</label>
+
+                <input
+                    type="text"
+                    id="edit-name"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Email Address</label>
+
+                <input
+                    type="email"
+                    id="edit-email"
+                    required
+                >
+
+            </div>
+
+
+            <div class="form-group">
+
+                <label>Mobile Number</label>
+
+                <input
+                    type="tel"
+                    id="edit-mobile"
+                    maxlength="10"
+                    placeholder="10-digit mobile number"
+                >
+
+            </div>
+
+
+            <div class="edit-buttons">
+
+                <button
+                    type="submit"
+                    class="profile-btn"
+                >
+                    UPDATE PROFILE
+                </button>
+
+
+                <button
+                    type="button"
+                    id="cancel-edit"
+                    class="cancel-btn"
+                >
+                    CANCEL
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <p id="profile-message"></p>
+
+    <a href="index.html" class="home-btn">
+    ← BACK TO HOME
+</a>
 
 
 </section>
 
 
-
 <script>
 
+const currentUser =
+    JSON.parse(localStorage.getItem("currentUser"));
 
-let user =
-JSON.parse(localStorage.getItem("user"));
+const profileView =
+    document.getElementById("profile-view");
 
+const profileEdit =
+    document.getElementById("profile-edit");
 
-if(user){
-
-
-document.getElementById("profile-data").innerHTML = `
-
-
-<h2>${user.name}</h2>
-
-<p>Email:
-${user.email}
-</p>
+const profileMessage =
+    document.getElementById("profile-message");
 
 
-<button onclick="logout()">
-Logout
-</button>
+// =========================================
+// CHECK LOGIN
+// =========================================
 
+if (!currentUser) {
 
-`;
+    profileView.innerHTML = `
 
+        <div class="not-logged-in">
+
+            <h2>You are not logged in</h2>
+
+            <p>
+                Please login to view your profile.
+            </p>
+
+            <a href="login.html">
+                LOGIN
+            </a>
+
+        </div>
+
+    `;
+
+} else {
+
+    loadProfile();
 
 }
 
 
+// =========================================
+// LOAD PROFILE
+// =========================================
 
-function logout(){
+function loadProfile() {
 
-localStorage.removeItem("login");
+    document.getElementById("display-name")
+        .textContent =
+        currentUser.name || "-";
 
-window.location.href="login.html";
+
+    document.getElementById("display-email")
+        .textContent =
+        currentUser.email || "-";
+
+
+    document.getElementById("display-mobile")
+        .textContent =
+        currentUser.mobile || "Not added";
 
 }
 
+
+// =========================================
+// EDIT BUTTON
+// =========================================
+
+document
+    .getElementById("edit-profile-btn")
+    .addEventListener("click", function () {
+
+        document.getElementById("edit-name").value =
+            currentUser.name || "";
+
+        document.getElementById("edit-email").value =
+            currentUser.email || "";
+
+        document.getElementById("edit-mobile").value =
+            currentUser.mobile || "";
+
+
+        profileView.classList.add("hidden");
+
+        profileEdit.classList.remove("hidden");
+
+        profileMessage.textContent = "";
+
+    });
+
+
+// =========================================
+// CANCEL
+// =========================================
+
+document
+    .getElementById("cancel-edit")
+    .addEventListener("click", function () {
+
+        profileEdit.classList.add("hidden");
+
+        profileView.classList.remove("hidden");
+
+        profileMessage.textContent = "";
+
+    });
+
+
+// =========================================
+// UPDATE PROFILE
+// =========================================
+
+document
+    .getElementById("profile-form")
+    .addEventListener("submit", function (e) {
+
+        e.preventDefault();
+
+
+        const newName =
+            document.getElementById("edit-name")
+            .value.trim();
+
+        const newEmail =
+            document.getElementById("edit-email")
+            .value.trim();
+
+        const newMobile =
+            document.getElementById("edit-mobile")
+            .value.trim();
+
+
+        // Name validation
+
+        if (newName.length < 2) {
+
+            alert("Please enter a valid name.");
+
+            return;
+
+        }
+
+
+        // Email validation
+
+        if (
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/
+            .test(newEmail)
+        ) {
+
+            alert("Please enter a valid email.");
+
+            return;
+
+        }
+
+
+        // Mobile validation
+
+        if (
+            newMobile &&
+            !/^[6-9]\d{9}$/.test(newMobile)
+        ) {
+
+            alert(
+                "Please enter a valid 10-digit mobile number."
+            );
+
+            return;
+
+        }
+
+
+        // Update object
+
+        currentUser.name =
+            newName;
+
+        currentUser.email =
+            newEmail;
+
+        currentUser.mobile =
+            newMobile;
+
+
+        // Save updated user
+
+        localStorage.setItem(
+            "currentUser",
+            JSON.stringify(currentUser)
+        );
+
+
+        // Also update registered user
+
+        localStorage.setItem(
+            "user",
+            JSON.stringify(currentUser)
+        );
+
+
+        // Refresh display
+
+        loadProfile();
+
+
+        // Switch back to view
+
+        profileEdit.classList.add("hidden");
+
+        profileView.classList.remove("hidden");
+
+
+        // Success message
+
+        profileMessage.textContent =
+            "✓ Profile updated successfully";
+
+
+        profileMessage.className =
+            "success-message";
+
+
+        setTimeout(function () {
+
+            profileMessage.textContent = "";
+
+        }, 3000);
+
+    });
+
+
+// =========================================
+// MOBILE ONLY NUMBERS
+// =========================================
+
+document
+    .getElementById("edit-mobile")
+    .addEventListener("input", function () {
+
+        this.value =
+            this.value.replace(/\D/g, "");
+
+    });
 
 </script>
-
 
 </body>
 

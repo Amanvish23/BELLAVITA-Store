@@ -3,89 +3,142 @@
 
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Shop - Bellavita Store</title>
+    <title>Shop - Bellavita Store</title>
 
-<link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
 </head>
 
 <body>
 
 
+<!-- =========================================
+     HEADER
+========================================= -->
+
 <header>
 
-<nav class="navbar">
+    <nav class="navbar">
 
-<div class="logo">
-<h2>Bellavita</h2>
-</div>
+        <div class="logo">
+            <h2>Bellavita</h2>
+        </div>
 
-<ul class="nav-links">
 
-<li><a href="index.html">Home</a></li>
+        <ul class="nav-links">
 
-<li><a href="about.html">About</a></li>
+            <li>
+                <a href="index.html">Home</a>
+            </li>
 
-<li><a href="contact.html">Contact</a></li>
+            <li>
+                <a href="shop.html" class="active">Shop</a>
+            </li>
 
-<li><a href="login.html">Login</a></li>
+            <li>
+                <a href="about.html">About</a>
+            </li>
 
-</ul>
+            <li>
+                <a href="contact.html">Contact</a>
+            </li>
 
-</nav>
+            <li>
+                <a href="login.html">Login</a>
+            </li>
+
+        </ul>
+
+    </nav>
 
 </header>
 
 
 
+<!-- =========================================
+     PRODUCTS
+========================================= -->
+
 <section class="products">
 
-<h1>All Products</h1>
+    <h1>All Products</h1>
 
 
-<div class="filter">
+    <!-- SEARCH & FILTER -->
 
-<input type="text" id="search"
-placeholder="Search products...">
+    <div class="filter">
 
-<select id="category">
-
-<option value="all">
-All Categories
-</option>
-
-<option value="Perfume">
-Perfume
-</option>
-
-<option value="Skin Care">
-Skin Care
-</option>
-
-<option value="Body Care">
-Body Care
-</option>
-
-<option value="Gift Set">
-Gift Set
-</option>
-
-</select>
-
-</div>
+        <input
+            type="text"
+            id="search"
+            placeholder="Search products..."
+            autocomplete="off"
+        >
 
 
-<div class="product-grid" id="shop-products">
+        <select id="category">
 
-</div>
+            <option value="all">
+                All Categories
+            </option>
 
+            <option value="Perfume">
+                Perfume
+            </option>
+
+            <option value="Skin Care">
+                Skin Care
+            </option>
+
+            <option value="Body Care">
+                Body Care
+            </option>
+
+            <option value="Gift Set">
+                Gift Set
+            </option>
+
+        </select>
+
+    </div>
+
+
+    <!-- PRODUCT GRID -->
+
+    <div
+        class="product-grid"
+        id="product-grid"
+    >
+
+    </div>
+
+
+    <!-- NO PRODUCTS MESSAGE -->
+
+    <div
+        id="no-products"
+        class="no-products"
+        style="display:none;"
+    >
+
+        <h2>No products found</h2>
+
+        <p>
+            Try a different search or category.
+        </p>
+
+    </div>
 
 </section>
 
 
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
 
 <script src="js/products.js"></script>
 
