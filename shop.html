@@ -9,140 +9,134 @@
     <title>Shop - Bellavita Store</title>
 
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 
 </head>
 
 <body>
 
 
-<!-- =========================================
+    <!-- =========================================
      HEADER
 ========================================= -->
 
-<header>
+    <header>
 
-    <nav class="navbar">
+        <nav class="navbar">
 
-        <div class="logo">
-            <h2>Bellavita</h2>
-        </div>
+            <div class="logo">
+                <h2>Bellavita</h2>
+            </div>
 
 
-        <ul class="nav-links">
+            <ul class="nav-links">
 
-            <li>
-                <a href="index.html">Home</a>
-            </li>
+                <li>
+                    <a href="index.html">Home</a>
+                </li>
 
-            <li>
-                <a href="shop.html" class="active">Shop</a>
-            </li>
+                <li><a href="shop.html">Shop</a></li>
 
-            <li>
-                <a href="about.html">About</a>
-            </li>
+                <li>
+                    <a href="about.html">About</a>
+                </li>
 
-            <li>
-                <a href="contact.html">Contact</a>
-            </li>
+                <li>
+                    <a href="contact.html">Contact</a>
+                </li>
 
-            <li>
-                <a href="login.html">Login</a>
-            </li>
-
-        </ul>
-
-    </nav>
-
-</header>
+                <li>
+                    <a href="cart.html">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span id="cart-count">0</span>
+                    </a>
+                </li>
 
 
 
-<!-- =========================================
+            </ul>
+
+        </nav>
+
+    </header>
+
+
+
+    <!-- =========================================
      PRODUCTS
 ========================================= -->
 
-<section class="products">
+    <section class="products">
 
-    <h1>All Products</h1>
-
-
-    <!-- SEARCH & FILTER -->
-
-    <div class="filter">
-
-        <input
-            type="text"
-            id="search"
-            placeholder="Search products..."
-            autocomplete="off"
-        >
+        <h1>All Products</h1>
 
 
-        <select id="category">
+        <!-- SEARCH & FILTER -->
 
-            <option value="all">
-                All Categories
-            </option>
+        <div class="filter">
 
-            <option value="Perfume">
-                Perfume
-            </option>
-
-            <option value="Skin Care">
-                Skin Care
-            </option>
-
-            <option value="Body Care">
-                Body Care
-            </option>
-
-            <option value="Gift Set">
-                Gift Set
-            </option>
-
-        </select>
-
-    </div>
+            <input type="text" id="search" placeholder="Search products..." autocomplete="off">
 
 
-    <!-- PRODUCT GRID -->
+            <select id="category">
 
-    <div
-        class="product-grid"
-        id="product-grid"
-    >
+                <option value="all">
+                    All Categories
+                </option>
 
-    </div>
+                <option value="Perfume">
+                    Perfume
+                </option>
+
+                <option value="Skin Care">
+                    Skin Care
+                </option>
+
+                <option value="Body Care">
+                    Body Care
+                </option>
+
+                <option value="Gift Set">
+                    Gift Set
+                </option>
+
+            </select>
+
+        </div>
 
 
-    <!-- NO PRODUCTS MESSAGE -->
+        <!-- PRODUCT GRID -->
 
-    <div
-        id="no-products"
-        class="no-products"
-        style="display:none;"
-    >
+        <div class="product-grid" id="product-grid">
 
-        <h2>No products found</h2>
+        </div>
 
-        <p>
-            Try a different search or category.
-        </p>
 
-    </div>
+        <!-- NO PRODUCTS MESSAGE -->
 
-</section>
+        <div id="no-products" class="no-products" style="display:none;">
+
+            <h2>No products found</h2>
+
+            <p>
+                Try a different search or category.
+            </p>
+
+        </div>
+
+    </section>
 
 
 
-<!-- =========================================
+    <!-- =========================================
      JAVASCRIPT
 ========================================= -->
 
-<script src="js/products.js"></script>
+    <script src="js/products.js"></script>
 
-<script src="js/shop.js"></script>
+    <script src="js/shop.js"></script>
 
 
 </body>
