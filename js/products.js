@@ -6,7 +6,7 @@ const products = [
     name: "Luxury Oud Perfume",
     price: 799,
     category: "Perfume",
-    image: "images/Luxury Oud Perfume.jpg",
+    image: "images/Luxury oud Perfume.jpg",
     rating: 4.8,
     description: "Long lasting premium oud fragrance."
   },
