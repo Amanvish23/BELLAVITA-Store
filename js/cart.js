@@ -2,14 +2,33 @@
 // BELLAVITA CART
 // =========================================
 
-// Check logged-in user
-const currentUser =
-    JSON.parse(localStorage.getItem("currentUser"));
+
+// =========================================
+// GET CURRENT USER
+// =========================================
+
+function getCurrentUser() {
+
+    try {
+
+        return JSON.parse(
+            localStorage.getItem("currentUser")
+        );
+
+    } catch (error) {
+
+        return null;
+
+    }
+
+}
 
 
 // =========================================
 // LOGIN PROTECTION
 // =========================================
+
+const currentUser = getCurrentUser();
 
 if (!currentUser) {
 
@@ -21,15 +40,36 @@ if (!currentUser) {
 
 
 // =========================================
-// USER CART
+// CART KEY
 // =========================================
 
-const cartKey =
-    `cart_${currentUser.email}`;
+const cartKey = currentUser
+    ? `cart_${currentUser.email}`
+    : null;
 
 
-let cartItems =
-    JSON.parse(localStorage.getItem(cartKey)) || [];
+// =========================================
+// GET CART
+// =========================================
+
+let cartItems = [];
+
+if (cartKey) {
+
+    try {
+
+        cartItems =
+            JSON.parse(
+                localStorage.getItem(cartKey)
+            ) || [];
+
+    } catch (error) {
+
+        cartItems = [];
+
+    }
+
+}
 
 
 // =========================================
@@ -42,12 +82,19 @@ const cartContainer =
 const totalPrice =
     document.getElementById("total-price");
 
+const checkoutButton =
+    document.getElementById("checkout-btn");
+
 
 // =========================================
 // SAVE CART
 // =========================================
 
 function saveCart() {
+
+    if (!cartKey) {
+        return;
+    }
 
     localStorage.setItem(
         cartKey,
@@ -62,6 +109,13 @@ function saveCart() {
 // =========================================
 
 function displayCart() {
+
+    if (!cartContainer) {
+        return;
+    }
+
+
+    // EMPTY CART
 
     if (cartItems.length === 0) {
 
@@ -84,12 +138,41 @@ function displayCart() {
 
         `;
 
-        totalPrice.innerHTML =
-            "Total: ₹0";
 
-        updateCartCount();
+        if (totalPrice) {
+
+            totalPrice.innerHTML =
+                "Total : ₹0";
+
+        }
+
+
+        if (checkoutButton) {
+
+            checkoutButton.style.pointerEvents =
+                "none";
+
+            checkoutButton.style.opacity =
+                "0.5";
+
+        }
+
 
         return;
+
+    }
+
+
+    // ENABLE CHECKOUT
+
+    if (checkoutButton) {
+
+        checkoutButton.style.pointerEvents =
+            "auto";
+
+        checkoutButton.style.opacity =
+            "1";
+
     }
 
 
@@ -98,19 +181,15 @@ function displayCart() {
     let total = 0;
 
 
+    // DISPLAY PRODUCTS
+
     cartItems.forEach((item, index) => {
 
-        // Support old cart items
-        if (!item.quantity) {
-            item.quantity = 1;
-        }
-
-
         const price =
-            Number(item.price);
+            Number(item.price) || 0;
 
         const quantity =
-            Number(item.quantity);
+            Number(item.quantity) || 1;
 
         const itemTotal =
             price * quantity;
@@ -135,20 +214,25 @@ function displayCart() {
                         ${item.name}
                     </h3>
 
+
                     <p>
-                        Category: ${item.category}
+                        Category:
+                        ${item.category}
                     </p>
 
+
                     <p class="cart-price">
+
                         ₹${price.toLocaleString("en-IN")}
+
                     </p>
 
 
                     <div class="quantity-box">
 
                         <button
-                            onclick="decreaseQuantity(${index})"
                             type="button"
+                            onclick="decreaseQuantity(${index})"
                         >
                             −
                         </button>
@@ -160,8 +244,8 @@ function displayCart() {
 
 
                         <button
-                            onclick="increaseQuantity(${index})"
                             type="button"
+                            onclick="increaseQuantity(${index})"
                         >
                             +
                         </button>
@@ -181,9 +265,9 @@ function displayCart() {
 
 
                     <button
+                        type="button"
                         class="remove-btn"
                         onclick="removeItem(${index})"
-                        type="button"
                     >
                         Remove
                     </button>
@@ -200,11 +284,14 @@ function displayCart() {
     saveCart();
 
 
-    totalPrice.innerHTML =
-        `Total: ₹${total.toLocaleString("en-IN")}`;
+    // TOTAL
 
+    if (totalPrice) {
 
-    updateCartCount();
+        totalPrice.innerHTML =
+            `Total : ₹${total.toLocaleString("en-IN")}`;
+
+    }
 
 }
 
@@ -215,6 +302,11 @@ function displayCart() {
 
 function increaseQuantity(index) {
 
+    if (!cartItems[index]) {
+        return;
+    }
+
+
     cartItems[index].quantity =
         Number(cartItems[index].quantity || 1) + 1;
 
@@ -222,6 +314,8 @@ function increaseQuantity(index) {
     saveCart();
 
     displayCart();
+
+    updateCartCount();
 
 }
 
@@ -232,14 +326,19 @@ function increaseQuantity(index) {
 
 function decreaseQuantity(index) {
 
-    const currentQuantity =
+    if (!cartItems[index]) {
+        return;
+    }
+
+
+    const quantity =
         Number(cartItems[index].quantity || 1);
 
 
-    if (currentQuantity > 1) {
+    if (quantity > 1) {
 
         cartItems[index].quantity =
-            currentQuantity - 1;
+            quantity - 1;
 
     } else {
 
@@ -263,6 +362,8 @@ function decreaseQuantity(index) {
 
     displayCart();
 
+    updateCartCount();
+
 }
 
 
@@ -272,11 +373,19 @@ function decreaseQuantity(index) {
 
 function removeItem(index) {
 
+    if (!cartItems[index]) {
+        return;
+    }
+
+
     cartItems.splice(index, 1);
+
 
     saveCart();
 
     displayCart();
+
+    updateCartCount();
 
 }
 
@@ -318,3 +427,5 @@ function updateCartCount() {
 // =========================================
 
 displayCart();
+
+updateCartCount();

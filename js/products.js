@@ -377,6 +377,8 @@ function updateCartCount() {
 // START
 // =========================================
 
-displayHomeProducts();
+if (typeof displayHomeProducts === "function") {
+    displayHomeProducts();
+}
 
 updateCartCount();

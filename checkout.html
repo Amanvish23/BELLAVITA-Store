@@ -612,33 +612,6 @@
 
 
 
-<!-- =========================================
-     CHECKOUT LOGIN PROTECTION
-========================================= -->
-
-<script>
-
-const currentUser =
-    JSON.parse(
-        localStorage.getItem("currentUser")
-    );
-
-
-if (!currentUser) {
-
-    alert(
-        "Please login first to continue checkout."
-    );
-
-    window.location.href =
-        "login.html";
-
-}
-
-</script>
-
-
-
 <script src="js/checkout.js"></script>
 
 
